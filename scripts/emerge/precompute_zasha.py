@@ -78,15 +78,15 @@ RL   Nucleic Acids Res. 2017;45:10811-10823.
 GA   27.00
 TC   27.00
 NC   27.00
+BM   cmbuild -F CM SEED
 WK   {wiki}
-{cc_lines}
-"""
+{cc_lines}"""
     if supplementary[rna_id]['switch?'].lower()[0] == 'y':
         rna_type = 'Cis-reg; riboswitch;'
         so_term = 'SO; 0000035; riboswitch;'
     elif supplementary[rna_id]['cis-reg?'].lower()[0] == 'y':
         rna_type = 'Cis-reg;'
-        so_term = 'SO; 0005836; regulatory_region'
+        so_term = 'SO; 0005836; regulatory_region;'
     else:
         rna_type = 'Gene; sRNA;'
         so_term = 'SO; 0001263; ncRNA_gene;'
@@ -121,7 +121,6 @@ def main(args):
         cmd = ('module load mpi/openmpi-x86_64 && '
                'bsub -o {0}/lsf_output.txt -e {0}/lsf_error.txt -g /emerge '
                      '"cd {0} && '
-                     'rm -f DESC && '
                      'rfsearch.pl -t 30 -cnompi -relax && '
                      'rfmake.pl -t 50 -a -forcethr && '
                      'cp {0}/SEED {0}/SEED-backup && '
