@@ -121,14 +121,14 @@ def main(args):
         cmd = ('module load mpi/openmpi-x86_64 && '
                'bsub -o {0}/lsf_output.txt -e {0}/lsf_error.txt -g /emerge '
                      '"cd {0} && '
+                     'mv {0}/SEED {0}/SEED-backup && '
+                     'esl-reformat --mingap stockholm SEED-backup > SEED && '
                      'rfsearch.pl -t 30 -cnompi -relax && '
                      'rfmake.pl -t 50 -a -forcethr && '
-                     'cp {0}/SEED {0}/SEED-backup && '
-                     'esl-reformat --mingap stockholm SEED-backup > SEED && '
                      'mkdir rscape-seed && R-scape --outdir rscape-seed --cyk align && '
                      'mkdir rscape-align && R-scape --outdir rscape-align --cyk align && '
                      'cd .. && '
-                     'rqc-overlap.pl {1}"').format(motif_dir, motif_name)
+                     'rqc-all.pl {1}"').format(motif_dir, motif_name)
         print cmd
         if not args.test:
             os.system(cmd)
